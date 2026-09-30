@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario de Preparación: Software Seguro y Sistemas Operativos</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --success: #10b981;
+            --error: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255,255,255,0.1);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            background-size: cover;
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        h1, h2, h3 {
+            margin-top: 0;
+            font-weight: 800;
+            text-align: center;
+            background: -webkit-linear-gradient(45deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        /* Botones */
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.05);
+            box-shadow: none;
+        }
+        
+        .btn-bookmark {
+            background: transparent;
+            border: 1px solid #eab308;
+            color: #eab308;
+            width: auto;
+        }
+        .btn-bookmark:hover, .btn-bookmark.active {
+            background: #eab308;
+            color: #1e293b;
+        }
+
+        /* Opciones de pregunta */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 16px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            color: var(--text-main);
+        }
+
+        .option:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .option.wrong {
+            border-color: var(--error);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Layouts de las pantallas */
+        .screen {
+            display: none;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-quiz {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .question-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            text-align: left;
+            color: white;
+        }
+
+        .explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--primary);
+            border-radius: 0 8px 8px 0;
+            display: none;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .explanation.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Resultados */
+        .results-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 16px;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Pantalla de Inicio -->
+        <div id="start-screen" class="glass-card screen active">
+            <h1>Cuestionario de Preparación</h1>
+            <p>Auditoría de conocimientos en Software Seguro y Sistemas Operativos. Basado en tus documentos teóricos (Threat Modeling, Autenticación vs Autorización, comandos de Linux, etc).</p>
+            <div style="margin-top: 40px;">
+                <button class="btn" onclick="startQuiz('all')">Empezar Cuestionario Completo</button>
+            </div>
+        </div>
+
+        <!-- Pantalla de Preguntas -->
+        <div id="quiz-screen" class="glass-card screen">
+            <div class="header-quiz">
+                <span class="badge" id="question-counter">Pregunta 1 / 15</span>
+                <button class="btn btn-bookmark" id="bookmark-btn" onclick="toggleBookmark()">
+                    <span id="bookmark-icon">☆</span> Marcar para revisar
+                </button>
+            </div>
+            
+            <div class="question-text" id="question-text">
+                ¿Pregunta?
+            </div>
+
+            <div class="options-grid" id="options-grid">
+                <!-- Opciones inyectadas por JS -->
+            </div>
+
+            <div class="explanation" id="explanation">
+                <!-- Explicación inyectada por JS -->
+            </div>
+
+            <div style="display: flex; gap: 15px; margin-top: 25px;">
+                <button class="btn" id="next-btn" style="display: none;" onclick="nextQuestion()">Siguiente Pregunta ➔</button>
+            </div>
+        </div>
+
+        <!-- Pantalla de Resultados -->
+        <div id="results-screen" class="glass-card screen">
+            <h1>Resultados</h1>
+            <p id="results-message">¡Has completado el cuestionario!</p>
+            
+            <div class="results-stats">
+                <div class="stat-box">
+                    <div class="stat-value" id="score-correct">0</div>
+                    <div class="stat-label">Correctas</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="score-wrong" style="color: var(--error)">0</div>
+                    <div class="stat-label">Incorrectas</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="score-bookmarked" style="color: #eab308">0</div>
+                    <div class="stat-label">Marcadas</div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn" onclick="startQuiz('all')">Repetir Todo</button>
+                <button class="btn btn-secondary" id="retry-wrong-btn" onclick="startQuiz('wrong')">Repetir Incorrectas</button>
+                <button class="btn btn-secondary" id="retry-bookmarked-btn" onclick="startQuiz('bookmarked')" style="grid-column: span 2;">Repetir Preguntas Marcadas</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const allQuestions = [
+            {
+                id: 1,
+                question: "¿Cuál de las siguientes opciones describe mejor la diferencia entre autenticación y autorización?",
+                options: [
+                    "Autenticación verifica quién eres; autorización determina a qué recursos tienes acceso.",
+                    "Autenticación determina los permisos; autorización verifica la identidad.",
+                    "Ambos procesos son exactamente iguales en un sistema IAM.",
+                    "Autenticación es para usuarios humanos, mientras que autorización es para dispositivos."
+                ],
+                correct: 0,
+                explanation: "Correcto. La autenticación responde a '¿Quién eres?' (validación de identidad mediante credenciales). La autorización responde a '¿Qué se te permite hacer?' (permisos de acceso a recursos)."
+            },
+            {
+                id: 2,
+                question: "Un sistema que utiliza un PIN de un solo uso (OTP) enviado al teléfono celular del usuario, está implementando un factor de autenticación de:",
+                options: ["Conocimiento", "Posesión", "Inherente", "Biometría"],
+                correct: 1,
+                explanation: "Es un factor de posesión (algo que tienes), ya que requiere que el usuario posea físicamente el teléfono móvil al que se envía el mensaje SMS."
+            },
+            {
+                id: 3,
+                question: "El modelo de control de acceso en el cual los permisos se asignan según el cargo o puesto del usuario (ej. Administrador, Estudiante, Docente) se conoce como:",
+                options: ["ABAC (Attribute-Based Access Control)", "MAC (Mandatory Access Control)", "RBAC (Role-Based Access Control)", "DAC (Discretionary Access Control)"],
+                correct: 2,
+                explanation: "RBAC (Role-Based Access Control) determina los permisos de acceso en función de los roles asignados a los usuarios dentro de una organización."
+            },
+            {
+                id: 4,
+                question: "En un entorno Linux, ¿qué comando utilizarías para crear un archivo comprimido llamado 'archivos.tar.gz' que contenga todos los archivos de un directorio?",
+                options: [
+                    "tar -xvzf archivos.tar.gz *",
+                    "tar -cvzf archivos.tar.gz *",
+                    "tar -tvf archivos.tar.gz",
+                    "zip archivos.tar.gz *"
+                ],
+                correct: 1,
+                explanation: "El comando 'tar -cvzf' se usa para Crear (c), mostrar Verbosidad (v), comprimir con gZip (z) en un Archivo (f). '-xvzf' se usa para extraer, y '-tvf' para listar contenidos."
+            },
+            {
+                id: 5,
+                question: "¿Cuál es el propósito principal de JSON Web Token (JWT) en sistemas modernos de autenticación?",
+                options: [
+                    "Encriptar contraseñas en la base de datos de forma segura.",
+                    "Encapsular información firmada que puede ser validada por la aplicación (como la identidad y permisos del usuario).",
+                    "Delegar el acceso de una aplicación a otra sin compartir contraseñas.",
+                    "Proveer un túnel seguro entre el cliente y el servidor de autorización."
+                ],
+                correct: 1,
+                explanation: "Un JWT encapsula información (payload) y está firmado criptográficamente, lo que permite a las aplicaciones verificar su autenticidad y confiar en los datos que contiene sin necesidad de consultar la base de datos constantemente."
+            },
+            {
+                id: 6,
+                question: "De acuerdo con OWASP, ¿cuáles son las cuatro preguntas fundamentales del marco de trabajo (framework) de Threat Modeling?",
+                options: [
+                    "¿Quién es el atacante?, ¿Qué herramientas usa?, ¿Cuándo atacará?, ¿Cómo nos defendemos?",
+                    "¿Qué estamos haciendo?, ¿Qué puede salir mal?, ¿Qué vamos a hacer al respecto?, ¿Hicimos un buen trabajo?",
+                    "¿Qué vulnerabilidades tenemos?, ¿Cómo las parcheamos?, ¿Quién es responsable?, ¿Cuánto costará?",
+                    "¿Cuáles son nuestros activos?, ¿Cuáles son las amenazas?, ¿Cuáles son los riesgos?, ¿Cuáles son las mitigaciones?"
+                ],
+                correct: 1,
+                explanation: "OWASP define las 4 preguntas de Threat Modeling como: 1. What are we working on? 2. What can go wrong? 3. What are we going to do about it? 4. Did we do a good job?"
+            },
+            {
+                id: 7,
+                question: "Si deseas cambiar los permisos del archivo 'notas.txt' para que SOLO el propietario pueda leer y escribir, ¿qué comando de Linux debes usar?",
+                options: ["chmod 777 notas.txt", "chmod 600 notas.txt", "chown notas.txt", "chmod 644 notas.txt"],
+                correct: 1,
+                explanation: "El número 6 (4 lectura + 2 escritura) se asigna al propietario. Los 0 se asignan al grupo y a otros. Por lo tanto, 'chmod 600' da permisos de lectura y escritura exclusivamente al propietario."
+            },
+            {
+                id: 8,
+                question: "¿Qué modelo de autorización evalúa políticas basándose en múltiples variables, como el departamento del usuario, la hora del día y la ubicación del dispositivo?",
+                options: ["RBAC", "MAC", "DAC", "ABAC (Attribute-Based Access Control)"],
+                correct: 3,
+                explanation: "ABAC utiliza atributos del usuario, del recurso, de la acción y del entorno (como hora y ubicación) para determinar dinámicamente si se concede el acceso."
+            },
+            {
+                id: 9,
+                question: "En el contexto de seguridad de contraseñas, ¿por qué son recomendables algoritmos como Argon2 o bcrypt en lugar de funciones hash simples (como MD5 o SHA-1)?",
+                options: [
+                    "Porque encriptan la contraseña de forma reversible, permitiendo recuperarla si el usuario la olvida.",
+                    "Porque tienen un alto costo computacional deliberado que ralentiza los ataques de fuerza bruta.",
+                    "Porque generan contraseñas más largas automáticamente.",
+                    "Porque son los únicos soportados nativamente por bases de datos modernas."
+                ],
+                correct: 1,
+                explanation: "Algoritmos como Argon2 y bcrypt implementan un 'factor de trabajo' (Key Stretching) que los hace intencionalmente lentos de calcular, mitigando en gran medida la efectividad de ataques de fuerza bruta o de diccionario."
+            },
+            {
+                id: 10,
+                question: "El comando `grep \"Hola\" notas.txt` en Linux sirve para:",
+                options: [
+                    "Reemplazar la palabra 'Hola' por otra en el archivo.",
+                    "Buscar e imprimir las líneas que contienen la palabra 'Hola' en el archivo 'notas.txt'.",
+                    "Crear un nuevo archivo llamado 'notas.txt' con el contenido 'Hola'.",
+                    "Eliminar la palabra 'Hola' del archivo."
+                ],
+                correct: 1,
+                explanation: "El comando grep (Global Regular Expression Print) se utiliza para buscar coincidencias de un patrón (en este caso 'Hola') dentro de archivos de texto y mostrarlas por pantalla."
+            },
+            {
+                id: 11,
+                question: "¿Qué es un Threat Model (Modelo de Amenazas) en el desarrollo de software?",
+                options: [
+                    "Una lista estática de virus informáticos conocidos.",
+                    "Un tipo de prueba de penetración automatizada (Pentesting).",
+                    "Una representación estructurada de toda la información que afecta la seguridad de una aplicación para tomar decisiones sobre riesgos.",
+                    "Un firewall avanzado que bloquea tráfico malicioso en tiempo real."
+                ],
+                correct: 2,
+                explanation: "Según OWASP, un Threat Model es una visión de la aplicación y su entorno a través de la lente de la seguridad, permitiendo la toma de decisiones informada sobre mitigación de riesgos."
+            },
+            {
+                id: 12,
+                question: "¿Qué estándar de autorización delega permisos a las aplicaciones utilizando 'Tokens de Acceso' para compartir datos entre sí? (ej. Permitir a una red social leer tus contactos)",
+                options: ["OIDC (OpenID Connect)", "SAML", "OAuth 2.0", "JWT"],
+                correct: 2,
+                explanation: "OAuth 2.0 es el protocolo estándar de la industria para autorización delegada, permitiendo a los usuarios otorgar acceso limitado a sus recursos en un sitio a otro sitio, sin exponer sus credenciales."
+            },
+            {
+                id: 13,
+                question: "¿Cuál es la función del comando `tar -xvzf archivos.tar.gz`?",
+                options: [
+                    "Comprimir un directorio entero.",
+                    "Listar los contenidos de un archivo comprimido sin extraerlos.",
+                    "Extraer (descomprimir) los archivos contenidos en el archivo 'archivos.tar.gz'.",
+                    "Eliminar el archivo comprimido."
+                ],
+                correct: 2,
+                explanation: "La bandera '-x' indica extracción, '-v' muestra el proceso, '-z' maneja la descompresión de gzip, y '-f' especifica el nombre del archivo."
+            },
+            {
+                id: 14,
+                question: "En un sistema de archivos Linux, para eliminar de manera recursiva e interactiva (preguntando antes de cada eliminación) un archivo usaríamos:",
+                options: ["rm -ri archivo", "rmdir archivo", "del archivo", "erase archivo"],
+                correct: 0,
+                explanation: "El comando 'rm' sirve para eliminar. La opción '-r' lo hace recursivo (para carpetas) y la '-i' (interactive) hace que el sistema pregunte por confirmación antes de cada borrado."
+            },
+            {
+                id: 15,
+                question: "¿Qué etapa del proceso de Threat Modeling de 4 preguntas suele utilizar metodologías estructuradas como STRIDE o Attack Trees para encontrar vulnerabilidades?",
+                options: [
+                    "Assess Scope (What are we working on?)",
+                    "Identify what can go wrong? (¿Qué puede salir mal?)",
+                    "Identify countermeasures (What are we going to do about it?)",
+                    "Assess your work (Did we do a good job?)"
+                ],
+                correct: 1,
+                explanation: "Metodologías como STRIDE se aplican en la fase de '¿Qué puede salir mal?' (Identify what can go wrong) para categorizar sistemáticamente las posibles amenazas y ataques."
+            }
+        ];
+
+        // Estado persistente cargado desde localStorage
+        let currentQuestions = JSON.parse(localStorage.getItem('quiz_current_questions') || '[]');
+        let currentIndex = parseInt(localStorage.getItem('quiz_current_index') || '0');
+        let score = parseInt(localStorage.getItem('quiz_score') || '0');
+        
+        let bookmarkedIds = new Set(JSON.parse(localStorage.getItem('quiz_bookmarked') || '[]'));
+        let wrongIds = new Set(JSON.parse(localStorage.getItem('quiz_wrong') || '[]'));
+        
+        let hasAnsweredCurrent = false;
+
+        // UI Elements
+        const screens = {
+            start: document.getElementById('start-screen'),
+            quiz: document.getElementById('quiz-screen'),
+            results: document.getElementById('results-screen')
+        };
+        const elQuestionText = document.getElementById('question-text');
+        const elOptionsGrid = document.getElementById('options-grid');
+        const elExplanation = document.getElementById('explanation');
+        const elNextBtn = document.getElementById('next-btn');
+        const elCounter = document.getElementById('question-counter');
+        const elBookmarkBtn = document.getElementById('bookmark-btn');
+        const elBookmarkIcon = document.getElementById('bookmark-icon');
+
+        // Almacenar progreso
+        function saveStateToStorage() {
+            localStorage.setItem('quiz_current_questions', JSON.stringify(currentQuestions));
+            localStorage.setItem('quiz_current_index', currentIndex.toString());
+            localStorage.setItem('quiz_score', score.toString());
+            localStorage.setItem('quiz_bookmarked', JSON.stringify([...bookmarkedIds]));
+            localStorage.setItem('quiz_wrong', JSON.stringify([...wrongIds]));
+        }
+
+        window.onload = () => {
+            if (currentQuestions.length > 0 && currentIndex < currentQuestions.length) {
+                switchScreen('quiz');
+                loadQuestion();
+            } else if (currentQuestions.length > 0 && currentIndex >= currentQuestions.length) {
+                showResults();
+            }
+        };
+
+        function switchScreen(screenName) {
+            Object.values(screens).forEach(s => s.classList.remove('active'));
+            screens[screenName].classList.add('active');
+        }
+
+        function startQuiz(mode) {
+            if (mode === 'all') {
+                currentQuestions = [...allQuestions];
+                wrongIds.clear(); // Limpiamos errores anteriores si repite todo
+            } else if (mode === 'wrong') {
+                currentQuestions = allQuestions.filter(q => wrongIds.has(q.id));
+                wrongIds.clear(); // Limpiamos para registrar los nuevos errores
+            } else if (mode === 'bookmarked') {
+                currentQuestions = allQuestions.filter(q => bookmarkedIds.has(q.id));
+            }
+
+            // Mezclar preguntas
+            currentQuestions.sort(() => Math.random() - 0.5);
+            
+            currentIndex = 0;
+            score = 0;
+            
+            if (currentQuestions.length === 0) {
+                alert("No hay preguntas en esta categoría.");
+                return;
+            }
+
+            saveStateToStorage();
+            switchScreen('quiz');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            hasAnsweredCurrent = false;
+            const q = currentQuestions[currentIndex];
+            
+            elCounter.textContent = `Pregunta ${currentIndex + 1} de ${currentQuestions.length}`;
+            elQuestionText.textContent = q.question;
+            
+            // Render Bookmark state
+            updateBookmarkButtonUI(q.id);
+
+            // Hide next & explanation
+            elNextBtn.style.display = 'none';
+            elExplanation.classList.remove('show');
+
+            // Render options
+            elOptionsGrid.innerHTML = '';
+            
+            // Creamos un array con índices para mezclarlos pero mantener rastro de la respuesta correcta original
+            const optionsWithIndex = q.options.map((opt, i) => ({ text: opt, originalIndex: i }));
+            optionsWithIndex.sort(() => Math.random() - 0.5);
+
+            optionsWithIndex.forEach((opt, index) => {
+                const btn = document.createElement('div');
+                btn.className = 'option';
+                btn.textContent = opt.text;
+                btn.onclick = () => selectOption(btn, opt.originalIndex, q.correct);
+                elOptionsGrid.appendChild(btn);
+            });
+        }
+
+        function selectOption(selectedElement, selectedOriginalIndex, correctOriginalIndex) {
+            if (hasAnsweredCurrent) return;
+            hasAnsweredCurrent = true;
+
+            const q = currentQuestions[currentIndex];
+            const isCorrect = selectedOriginalIndex === correctOriginalIndex;
+
+            if (isCorrect) {
+                selectedElement.classList.add('correct');
+                score++;
+            } else {
+                selectedElement.classList.add('wrong');
+                wrongIds.add(q.id); // Guardamos la id de la pregunta mal respondida
+                
+                // Buscar y marcar la correcta
+                const optionsElements = elOptionsGrid.querySelectorAll('.option');
+                const correctOptionText = q.options[correctOriginalIndex];
+                optionsElements.forEach(el => {
+                    if (el.textContent === correctOptionText) {
+                        el.classList.add('correct');
+                    }
+                });
+            }
+
+            // Mostrar explicación
+            elExplanation.innerHTML = `<strong>${isCorrect ? '¡Correcto!' : 'Incorrecto.'}</strong> ${q.explanation}`;
+            elExplanation.classList.add('show');
+            
+            // Mostrar botón siguiente
+            if (currentIndex === currentQuestions.length - 1) {
+                elNextBtn.textContent = "Ver Resultados";
+            } else {
+                elNextBtn.textContent = "Siguiente Pregunta ➔";
+            }
+            elNextBtn.style.display = 'inline-flex';
+            
+            saveStateToStorage();
+        }
+
+        function toggleBookmark() {
+            const q = currentQuestions[currentIndex];
+            if (bookmarkedIds.has(q.id)) {
+                bookmarkedIds.delete(q.id);
+            } else {
+                bookmarkedIds.add(q.id);
+            }
+            saveStateToStorage();
+            updateBookmarkButtonUI(q.id);
+        }
+
+        function updateBookmarkButtonUI(questionId) {
+            if (bookmarkedIds.has(questionId)) {
+                elBookmarkBtn.classList.add('active');
+                elBookmarkIcon.textContent = '★';
+            } else {
+                elBookmarkBtn.classList.remove('active');
+                elBookmarkIcon.textContent = '☆';
+            }
+        }
+
+        function nextQuestion() {
+            if (currentIndex < currentQuestions.length - 1) {
+                currentIndex++;
+                saveStateToStorage();
+                loadQuestion();
+            } else {
+                currentIndex++;
+                saveStateToStorage();
+                showResults();
+            }
+        }
+
+        function showResults() {
+            switchScreen('results');
+            
+            document.getElementById('score-correct').textContent = score;
+            const wrongCount = currentQuestions.length - score;
+            document.getElementById('score-wrong').textContent = wrongCount;
+            document.getElementById('score-bookmarked').textContent = bookmarkedIds.size;
+
+            const retryWrongBtn = document.getElementById('retry-wrong-btn');
+            if (wrongIds.size === 0) {
+                retryWrongBtn.style.display = 'none';
+            } else {
+                retryWrongBtn.style.display = 'inline-flex';
+                retryWrongBtn.textContent = `Repetir Incorrectas (${wrongIds.size})`;
+            }
+
+            const retryBookmarkedBtn = document.getElementById('retry-bookmarked-btn');
+            if (bookmarkedIds.size === 0) {
+                retryBookmarkedBtn.style.display = 'none';
+            } else {
+                retryBookmarkedBtn.style.display = 'inline-flex';
+                retryBookmarkedBtn.textContent = `Repetir Marcadas (${bookmarkedIds.size})`;
+            }
+            
+            // Limpiar el progreso del cuestionario para la proxima vez (pero no los errores ni favoritos)
+            currentQuestions = [];
+            currentIndex = 0;
+            score = 0;
+            localStorage.removeItem('quiz_current_questions');
+            localStorage.removeItem('quiz_current_index');
+            localStorage.removeItem('quiz_score');
+        }
+    </script>
+</body>
+</html>
