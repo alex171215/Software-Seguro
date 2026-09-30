@@ -318,159 +318,729 @@
 
     <script>
         const allQuestions = [
-            {
-                id: 1,
-                question: "¿Cuál de las siguientes opciones describe mejor la diferencia entre autenticación y autorización?",
-                options: [
-                    "Autenticación verifica quién eres; autorización determina a qué recursos tienes acceso.",
-                    "Autenticación determina los permisos; autorización verifica la identidad.",
-                    "Ambos procesos son exactamente iguales en un sistema IAM.",
-                    "Autenticación es para usuarios humanos, mientras que autorización es para dispositivos."
-                ],
-                correct: 0,
-                explanation: "Correcto. La autenticación responde a '¿Quién eres?' (validación de identidad mediante credenciales). La autorización responde a '¿Qué se te permite hacer?' (permisos de acceso a recursos)."
-            },
-            {
-                id: 2,
-                question: "Un sistema que utiliza un PIN de un solo uso (OTP) enviado al teléfono celular del usuario, está implementando un factor de autenticación de:",
-                options: ["Conocimiento", "Posesión", "Inherente", "Biometría"],
-                correct: 1,
-                explanation: "Es un factor de posesión (algo que tienes), ya que requiere que el usuario posea físicamente el teléfono móvil al que se envía el mensaje SMS."
-            },
-            {
-                id: 3,
-                question: "El modelo de control de acceso en el cual los permisos se asignan según el cargo o puesto del usuario (ej. Administrador, Estudiante, Docente) se conoce como:",
-                options: ["ABAC (Attribute-Based Access Control)", "MAC (Mandatory Access Control)", "RBAC (Role-Based Access Control)", "DAC (Discretionary Access Control)"],
-                correct: 2,
-                explanation: "RBAC (Role-Based Access Control) determina los permisos de acceso en función de los roles asignados a los usuarios dentro de una organización."
-            },
-            {
-                id: 4,
-                question: "En un entorno Linux, ¿qué comando utilizarías para crear un archivo comprimido llamado 'archivos.tar.gz' que contenga todos los archivos de un directorio?",
-                options: [
-                    "tar -xvzf archivos.tar.gz *",
-                    "tar -cvzf archivos.tar.gz *",
-                    "tar -tvf archivos.tar.gz",
-                    "zip archivos.tar.gz *"
-                ],
-                correct: 1,
-                explanation: "El comando 'tar -cvzf' se usa para Crear (c), mostrar Verbosidad (v), comprimir con gZip (z) en un Archivo (f). '-xvzf' se usa para extraer, y '-tvf' para listar contenidos."
-            },
-            {
-                id: 5,
-                question: "¿Cuál es el propósito principal de JSON Web Token (JWT) en sistemas modernos de autenticación?",
-                options: [
-                    "Encriptar contraseñas en la base de datos de forma segura.",
-                    "Encapsular información firmada que puede ser validada por la aplicación (como la identidad y permisos del usuario).",
-                    "Delegar el acceso de una aplicación a otra sin compartir contraseñas.",
-                    "Proveer un túnel seguro entre el cliente y el servidor de autorización."
-                ],
-                correct: 1,
-                explanation: "Un JWT encapsula información (payload) y está firmado criptográficamente, lo que permite a las aplicaciones verificar su autenticidad y confiar en los datos que contiene sin necesidad de consultar la base de datos constantemente."
-            },
-            {
-                id: 6,
-                question: "De acuerdo con OWASP, ¿cuáles son las cuatro preguntas fundamentales del marco de trabajo (framework) de Threat Modeling?",
-                options: [
-                    "¿Quién es el atacante?, ¿Qué herramientas usa?, ¿Cuándo atacará?, ¿Cómo nos defendemos?",
-                    "¿Qué estamos haciendo?, ¿Qué puede salir mal?, ¿Qué vamos a hacer al respecto?, ¿Hicimos un buen trabajo?",
-                    "¿Qué vulnerabilidades tenemos?, ¿Cómo las parcheamos?, ¿Quién es responsable?, ¿Cuánto costará?",
-                    "¿Cuáles son nuestros activos?, ¿Cuáles son las amenazas?, ¿Cuáles son los riesgos?, ¿Cuáles son las mitigaciones?"
-                ],
-                correct: 1,
-                explanation: "OWASP define las 4 preguntas de Threat Modeling como: 1. What are we working on? 2. What can go wrong? 3. What are we going to do about it? 4. Did we do a good job?"
-            },
-            {
-                id: 7,
-                question: "Si deseas cambiar los permisos del archivo 'notas.txt' para que SOLO el propietario pueda leer y escribir, ¿qué comando de Linux debes usar?",
-                options: ["chmod 777 notas.txt", "chmod 600 notas.txt", "chown notas.txt", "chmod 644 notas.txt"],
-                correct: 1,
-                explanation: "El número 6 (4 lectura + 2 escritura) se asigna al propietario. Los 0 se asignan al grupo y a otros. Por lo tanto, 'chmod 600' da permisos de lectura y escritura exclusivamente al propietario."
-            },
-            {
-                id: 8,
-                question: "¿Qué modelo de autorización evalúa políticas basándose en múltiples variables, como el departamento del usuario, la hora del día y la ubicación del dispositivo?",
-                options: ["RBAC", "MAC", "DAC", "ABAC (Attribute-Based Access Control)"],
-                correct: 3,
-                explanation: "ABAC utiliza atributos del usuario, del recurso, de la acción y del entorno (como hora y ubicación) para determinar dinámicamente si se concede el acceso."
-            },
-            {
-                id: 9,
-                question: "En el contexto de seguridad de contraseñas, ¿por qué son recomendables algoritmos como Argon2 o bcrypt en lugar de funciones hash simples (como MD5 o SHA-1)?",
-                options: [
-                    "Porque encriptan la contraseña de forma reversible, permitiendo recuperarla si el usuario la olvida.",
-                    "Porque tienen un alto costo computacional deliberado que ralentiza los ataques de fuerza bruta.",
-                    "Porque generan contraseñas más largas automáticamente.",
-                    "Porque son los únicos soportados nativamente por bases de datos modernas."
-                ],
-                correct: 1,
-                explanation: "Algoritmos como Argon2 y bcrypt implementan un 'factor de trabajo' (Key Stretching) que los hace intencionalmente lentos de calcular, mitigando en gran medida la efectividad de ataques de fuerza bruta o de diccionario."
-            },
-            {
-                id: 10,
-                question: "El comando `grep \"Hola\" notas.txt` en Linux sirve para:",
-                options: [
-                    "Reemplazar la palabra 'Hola' por otra en el archivo.",
-                    "Buscar e imprimir las líneas que contienen la palabra 'Hola' en el archivo 'notas.txt'.",
-                    "Crear un nuevo archivo llamado 'notas.txt' con el contenido 'Hola'.",
-                    "Eliminar la palabra 'Hola' del archivo."
-                ],
-                correct: 1,
-                explanation: "El comando grep (Global Regular Expression Print) se utiliza para buscar coincidencias de un patrón (en este caso 'Hola') dentro de archivos de texto y mostrarlas por pantalla."
-            },
-            {
-                id: 11,
-                question: "¿Qué es un Threat Model (Modelo de Amenazas) en el desarrollo de software?",
-                options: [
-                    "Una lista estática de virus informáticos conocidos.",
-                    "Un tipo de prueba de penetración automatizada (Pentesting).",
-                    "Una representación estructurada de toda la información que afecta la seguridad de una aplicación para tomar decisiones sobre riesgos.",
-                    "Un firewall avanzado que bloquea tráfico malicioso en tiempo real."
-                ],
-                correct: 2,
-                explanation: "Según OWASP, un Threat Model es una visión de la aplicación y su entorno a través de la lente de la seguridad, permitiendo la toma de decisiones informada sobre mitigación de riesgos."
-            },
-            {
-                id: 12,
-                question: "¿Qué estándar de autorización delega permisos a las aplicaciones utilizando 'Tokens de Acceso' para compartir datos entre sí? (ej. Permitir a una red social leer tus contactos)",
-                options: ["OIDC (OpenID Connect)", "SAML", "OAuth 2.0", "JWT"],
-                correct: 2,
-                explanation: "OAuth 2.0 es el protocolo estándar de la industria para autorización delegada, permitiendo a los usuarios otorgar acceso limitado a sus recursos en un sitio a otro sitio, sin exponer sus credenciales."
-            },
-            {
-                id: 13,
-                question: "¿Cuál es la función del comando `tar -xvzf archivos.tar.gz`?",
-                options: [
-                    "Comprimir un directorio entero.",
-                    "Listar los contenidos de un archivo comprimido sin extraerlos.",
-                    "Extraer (descomprimir) los archivos contenidos en el archivo 'archivos.tar.gz'.",
-                    "Eliminar el archivo comprimido."
-                ],
-                correct: 2,
-                explanation: "La bandera '-x' indica extracción, '-v' muestra el proceso, '-z' maneja la descompresión de gzip, y '-f' especifica el nombre del archivo."
-            },
-            {
-                id: 14,
-                question: "En un sistema de archivos Linux, para eliminar de manera recursiva e interactiva (preguntando antes de cada eliminación) un archivo usaríamos:",
-                options: ["rm -ri archivo", "rmdir archivo", "del archivo", "erase archivo"],
-                correct: 0,
-                explanation: "El comando 'rm' sirve para eliminar. La opción '-r' lo hace recursivo (para carpetas) y la '-i' (interactive) hace que el sistema pregunte por confirmación antes de cada borrado."
-            },
-            {
-                id: 15,
-                question: "¿Qué etapa del proceso de Threat Modeling de 4 preguntas suele utilizar metodologías estructuradas como STRIDE o Attack Trees para encontrar vulnerabilidades?",
-                options: [
-                    "Assess Scope (What are we working on?)",
-                    "Identify what can go wrong? (¿Qué puede salir mal?)",
-                    "Identify countermeasures (What are we going to do about it?)",
-                    "Assess your work (Did we do a good job?)"
-                ],
-                correct: 1,
-                explanation: "Metodologías como STRIDE se aplican en la fase de '¿Qué puede salir mal?' (Identify what can go wrong) para categorizar sistemáticamente las posibles amenazas y ataques."
-            }
-        ];
+  {
+    "id": 1,
+    "question": "¿Cuál de las siguientes opciones describe mejor la diferencia entre autenticación y autorización en sistemas informáticos?",
+    "options": [
+      "La autenticación verifica quién eres al ingresar; la autorización determina a qué recursos tienes acceso una vez dentro.",
+      "La autenticación determina los permisos del usuario; la autorización verifica la identidad del usuario en el sistema.",
+      "Ambos procesos son exactamente iguales y se utilizan como sinónimos en un sistema de gestión de identidades.",
+      "La autenticación se usa solo para usuarios humanos, mientras que la autorización es exclusiva para dispositivos."
+    ],
+    "correct": 0,
+    "explanation": "La autenticación responde a '¿Quién eres?' mediante credenciales. La autorización responde a '¿Qué se te permite hacer?' asignando permisos."
+  },
+  {
+    "id": 2,
+    "question": "Un sistema que utiliza un PIN de un solo uso (OTP) enviado al teléfono celular del usuario está implementando un factor de:",
+    "options": [
+      "Autenticación basada en el conocimiento exclusivo del usuario.",
+      "Autenticación basada en la posesión de un dispositivo físico.",
+      "Autenticación basada en una característica inherente física.",
+      "Autenticación basada en el comportamiento del usuario."
+    ],
+    "correct": 1,
+    "explanation": "Es un factor de posesión (algo que tienes), ya que requiere que el usuario posea físicamente el teléfono para recibir el SMS."
+  },
+  {
+    "id": 3,
+    "question": "El modelo de control de acceso en el cual los permisos se asignan según el cargo o puesto del usuario se conoce como:",
+    "options": [
+      "Control de Acceso Basado en Atributos (ABAC), evaluando el contexto.",
+      "Control de Acceso Obligatorio (MAC), usando etiquetas secretas.",
+      "Control de Acceso Basado en Roles (RBAC), según su posición.",
+      "Control de Acceso Discrecional (DAC), definido por el creador."
+    ],
+    "correct": 2,
+    "explanation": "RBAC (Role-Based Access Control) determina los permisos en función de los roles asignados a los usuarios dentro de la organización."
+  },
+  {
+    "id": 4,
+    "question": "¿Qué modelo de autorización evalúa políticas basándose en múltiples variables dinámicas, como el departamento, hora y ubicación?",
+    "options": [
+      "Control de Acceso Basado en Roles (RBAC)",
+      "Control de Acceso Obligatorio (MAC)",
+      "Control de Acceso Discrecional (DAC)",
+      "Control de Acceso Basado en Atributos (ABAC)"
+    ],
+    "correct": 3,
+    "explanation": "ABAC utiliza atributos del usuario, recurso, acción y entorno (como hora y ubicación) para determinar si se concede el acceso."
+  },
+  {
+    "id": 5,
+    "question": "¿Cuál es el propósito principal de usar un JSON Web Token (JWT) en los sistemas modernos de autenticación web?",
+    "options": [
+      "Encriptar contraseñas en la base de datos de manera muy segura.",
+      "Encapsular información firmada que la aplicación valida sin consultar la BD.",
+      "Delegar acceso de una aplicación a otra sin compartir contraseñas nunca.",
+      "Crear un túnel cifrado entre el cliente web y el servidor de autorización."
+    ],
+    "correct": 1,
+    "explanation": "Un JWT encapsula información (payload) y está firmado, lo que permite verificar su autenticidad sin consultar la base de datos constantemente."
+  },
+  {
+    "id": 6,
+    "question": "¿Qué estándar de autorización delega permisos a aplicaciones usando tokens de acceso para compartir datos entre servicios?",
+    "options": [
+      "Protocolo OpenID Connect (OIDC)",
+      "Lenguaje de Marcado de Aserción de Seguridad (SAML)",
+      "Marco de Autorización OAuth 2.0",
+      "Algoritmo de Hashing Seguro (SHA)"
+    ],
+    "correct": 2,
+    "explanation": "OAuth 2.0 es el protocolo estándar para autorización delegada, permitiendo otorgar acceso limitado a recursos sin exponer credenciales."
+  },
+  {
+    "id": 7,
+    "question": "En seguridad de contraseñas, ¿por qué son recomendables algoritmos como Argon2 o bcrypt frente a hash simples como MD5?",
+    "options": [
+      "Porque permiten revertir el cifrado si el usuario olvida su contraseña.",
+      "Porque incluyen un alto costo computacional para frenar ataques de fuerza bruta.",
+      "Porque generan cadenas de texto significativamente más largas automáticamente.",
+      "Porque son los únicos algoritmos soportados por las bases de datos SQL."
+    ],
+    "correct": 1,
+    "explanation": "Argon2 y bcrypt usan un factor de trabajo (Key Stretching) haciéndolos intencionalmente lentos, mitigando los ataques de fuerza bruta."
+  },
+  {
+    "id": 8,
+    "question": "¿Cuál es una ventaja principal de la Autenticación Multifactor (MFA) frente a la autenticación de un solo factor (SFA)?",
+    "options": [
+      "Elimina completamente la necesidad de recordar contraseñas complejas.",
+      "Requiere la validación de múltiples dimensiones, reduciendo el robo de cuentas.",
+      "Acelera el proceso de inicio de sesión para los usuarios frecuentes.",
+      "Permite el acceso anónimo y seguro a recursos de red no confidenciales."
+    ],
+    "correct": 1,
+    "explanation": "MFA combina factores (conocimiento, posesión, inherencia), lo que dificulta que un atacante comprometa la cuenta aunque robe la contraseña."
+  },
+  {
+    "id": 9,
+    "question": "En un ataque de intermediario (MitM), ¿cuál de los siguientes mecanismos de autenticación es más vulnerable si se usa solo?",
+    "options": [
+      "Autenticación basada en certificados digitales",
+      "Autenticación biométrica mediante huella dactilar",
+      "Autenticación mediante usuario y contraseña estática",
+      "Autenticación mediante token de hardware FIDO2"
+    ],
+    "correct": 2,
+    "explanation": "Las contraseñas estáticas son fácilmente interceptables si el canal no es seguro, mientras que los certificados y tokens ofrecen resistencia."
+  },
+  {
+    "id": 10,
+    "question": "¿Qué ocurre típicamente cuando un Token de Acceso (Access Token) expira en un sistema de autenticación moderno?",
+    "options": [
+      "El usuario es bloqueado permanentemente del sistema por motivos de seguridad.",
+      "El cliente debe utilizar un Refresh Token válido para obtener un nuevo Access Token.",
+      "La aplicación cliente cambia al modelo de autorización basado en roles estáticos.",
+      "El administrador del sistema debe aprobar manualmente la renovación del acceso."
+    ],
+    "correct": 1,
+    "explanation": "Los Access Tokens tienen vida corta por seguridad. Cuando expiran, la aplicación usa el Refresh Token para renovar el acceso sin pedir credenciales."
+  },
+  {
+    "id": 11,
+    "question": "¿Qué es un Threat Model (Modelo de Amenazas) en el contexto de desarrollo de software seguro según OWASP?",
+    "options": [
+      "Una base de datos global de virus informáticos conocidos y actualizados.",
+      "Una herramienta automatizada de pruebas de penetración y escaneo de puertos.",
+      "Una visión estructurada de la aplicación para identificar y mitigar riesgos.",
+      "Un firewall físico de última generación que bloquea tráfico web malicioso."
+    ],
+    "correct": 2,
+    "explanation": "El Threat Modeling identifica, comunica y entiende las amenazas y mitigaciones en el contexto de proteger una aplicación."
+  },
+  {
+    "id": 12,
+    "question": "Según el marco de trabajo de OWASP, ¿cuáles son las cuatro preguntas fundamentales del proceso de Threat Modeling?",
+    "options": [
+      "¿Quién ataca?, ¿Con qué herramientas?, ¿Cuándo será?, ¿Cómo nos defendemos?",
+      "¿Qué estamos haciendo?, ¿Qué puede salir mal?, ¿Qué haremos?, ¿Lo hicimos bien?",
+      "¿Cuáles vulnerabilidades existen?, ¿Cómo las parchamos?, ¿Quién paga?, ¿Cuándo?",
+      "¿Qué activos tenemos?, ¿Qué amenazas hay?, ¿Qué riesgos son?, ¿Qué impacto?"
+    ],
+    "correct": 1,
+    "explanation": "OWASP usa: 1. What are we working on? 2. What can go wrong? 3. What are we going to do about it? 4. Did we do a good job?"
+  },
+  {
+    "id": 13,
+    "question": "En la fase '¿Qué puede salir mal?' del Threat Modeling, ¿qué metodología estructurada se utiliza comúnmente?",
+    "options": [
+      "Evaluación de rendimiento del servidor.",
+      "Aplicación del modelo STRIDE.",
+      "Firma digital de código fuente.",
+      "Análisis de requisitos funcionales."
+    ],
+    "correct": 1,
+    "explanation": "STRIDE (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege) es ideal para identificar qué puede salir mal."
+  },
+  {
+    "id": 14,
+    "question": "¿Cuál de las siguientes situaciones justificaría realizar una actualización en el Modelo de Amenazas (Threat Model)?",
+    "options": [
+      "El equipo de desarrollo cambia el color del botón principal de la aplicación.",
+      "Se integra una nueva pasarela de pagos de terceros en la arquitectura.",
+      "Un desarrollador junior se une al equipo de programación de la interfaz.",
+      "Se detectan errores ortográficos menores en la documentación del usuario."
+    ],
+    "correct": 1,
+    "explanation": "Actualizar el modelo es necesario tras cambios arquitectónicos o de infraestructura, adición de nuevas características críticas o tras un incidente."
+  },
+  {
+    "id": 15,
+    "question": "En la pregunta '¿Hicimos un buen trabajo?' del Threat Modeling, el objetivo principal es:",
+    "options": [
+      "Aprobar el presupuesto para las siguientes fases de desarrollo de software.",
+      "Validar el modelo, verificar amenazas y confirmar el éxito de las mitigaciones.",
+      "Publicar los hallazgos en redes sociales para obtener validación externa.",
+      "Despedir a los desarrolladores responsables de introducir las vulnerabilidades."
+    ],
+    "correct": 1,
+    "explanation": "La última pregunta busca evaluar la calidad del análisis de amenazas y comprobar que las contramedidas elegidas fueron implementadas correctamente."
+  },
+  {
+    "id": 16,
+    "question": "El principio de Confidencialidad de la información tiene como objetivo principal:",
+    "options": [
+      "Asegurar que los datos no puedan ser modificados por usuarios sin autorización.",
+      "Garantizar que la información sea accesible solo para personas autorizadas.",
+      "Mantener los sistemas y datos operativos y accesibles cuando se requieran.",
+      "Verificar de manera inequívoca la identidad del creador de la información."
+    ],
+    "correct": 1,
+    "explanation": "La confidencialidad previene la divulgación intencionada o accidental de información a personas, entidades o procesos no autorizados."
+  },
+  {
+    "id": 17,
+    "question": "Una alteración no autorizada en el historial clínico de un paciente en un hospital afecta directamente al principio de:",
+    "options": [
+      "Confidencialidad de los datos médicos.",
+      "Integridad de los datos almacenados.",
+      "Disponibilidad del sistema hospitalario.",
+      "No repudio de la información clínica."
+    ],
+    "correct": 1,
+    "explanation": "La Integridad asegura que la información es exacta y no ha sido alterada, añadida o destruida de forma no autorizada."
+  },
+  {
+    "id": 18,
+    "question": "Si los servidores de un banco sufren un ataque de denegación de servicio (DDoS) que impide a los clientes acceder, se vulnera la:",
+    "options": [
+      "Confidencialidad financiera.",
+      "Integridad de las transacciones.",
+      "Disponibilidad del servicio.",
+      "Autenticidad de los clientes."
+    ],
+    "correct": 2,
+    "explanation": "La disponibilidad garantiza que los sistemas y datos estén operativos y accesibles para los usuarios legítimos cuando los necesiten."
+  },
+  {
+    "id": 19,
+    "question": "La dimensión de 'No Repudio' en la seguridad de la información garantiza que:",
+    "options": [
+      "Los datos no puedan ser vistos por personas ajenas a la organización central.",
+      "Ninguna de las partes involucradas pueda negar la autoría de una transacción.",
+      "Los sistemas estén protegidos contra interrupciones de suministro eléctrico.",
+      "Las contraseñas de los usuarios no puedan ser interceptadas por terceros."
+    ],
+    "correct": 1,
+    "explanation": "El No Repudio (Trazabilidad) asegura mediante pruebas criptográficas o logs que el autor no pueda negar haber realizado una acción o envío."
+  },
+  {
+    "id": 20,
+    "question": "¿Qué medida técnica ayuda a garantizar el principio de Confidencialidad al enviar datos a través de Internet?",
+    "options": [
+      "Utilizar discos redundantes (RAID).",
+      "Realizar copias de seguridad diarias.",
+      "Implementar un balanceador de carga.",
+      "Cifrar los datos durante la transmisión."
+    ],
+    "correct": 3,
+    "explanation": "El cifrado (encriptación) asegura que aunque los datos sean interceptados, no puedan ser leídos sin la clave correspondiente, garantizando confidencialidad."
+  },
+  {
+    "id": 21,
+    "question": "¿Cuál es la definición de un 'Malware' (Software Malicioso)?",
+    "options": [
+      "Un software diseñado específicamente para optimizar la velocidad del disco duro.",
+      "Cualquier código utilizado para robar datos o causar daños de forma intencional.",
+      "Una actualización de sistema operativo que se instala automáticamente sin aviso.",
+      "Un programa obsoleto que ya no recibe soporte técnico del fabricante."
+    ],
+    "correct": 1,
+    "explanation": "El malware es cualquier software diseñado para dañar, explotar, deshabilitar dispositivos o robar información sin consentimiento."
+  },
+  {
+    "id": 22,
+    "question": "El malware que se disfraza de un programa legítimo para engañar a los usuarios y lograr que lo ejecuten voluntariamente se conoce como:",
+    "options": [
+      "Gusano informático (Worm).",
+      "Caballo de Troya (Troyano).",
+      "Ransomware de secuestro.",
+      "Adware publicitario intrusivo."
+    ],
+    "correct": 1,
+    "explanation": "Los Troyanos se ocultan dentro de software aparentemente inofensivo. Al ejecutarse, instalan cargas útiles maliciosas en el sistema."
+  },
+  {
+    "id": 23,
+    "question": "Un usuario no puede abrir los archivos de su PC porque han sido cifrados, y aparece una pantalla exigiendo un pago. Esto es un ataque de:",
+    "options": [
+      "Ataque de fuerza bruta (Brute force).",
+      "Software espía malicioso (Spyware).",
+      "Bomba lógica destructiva (Logic bomb).",
+      "Software de secuestro (Ransomware)."
+    ],
+    "correct": 3,
+    "explanation": "El Ransomware cifra los datos de la víctima y extorsiona solicitando un pago (rescate) a cambio de la clave de descifrado."
+  },
+  {
+    "id": 24,
+    "question": "A diferencia de un virus, la principal característica de un gusano informático (Worm) es que:",
+    "options": [
+      "Cifra los archivos y exige el pago de un rescate inmediato.",
+      "Se propaga por la red sin requerir la intervención humana.",
+      "Solo afecta a los teléfonos móviles inteligentes y tabletas.",
+      "Muestra anuncios no deseados en el navegador del usuario."
+    ],
+    "correct": 1,
+    "explanation": "Los gusanos son programas independientes que explotan vulnerabilidades de red para autoreplicarse y expandirse sin requerir que un usuario los ejecute."
+  },
+  {
+    "id": 25,
+    "question": "Una red de computadoras infectadas que trabajan en conjunto de forma remota para lanzar ataques DDoS se denomina:",
+    "options": [
+      "Red Privada Virtual (VPN).",
+      "Botnet (Red de robots).",
+      "Clúster de alta disponibilidad.",
+      "Red de área local (LAN)."
+    ],
+    "correct": 1,
+    "explanation": "Una botnet es un conjunto de dispositivos comprometidos controlados centralmente por un atacante para tareas ilícitas como envíos de spam o ataques DDoS."
+  },
+  {
+    "id": 26,
+    "question": "La ingeniería social en el ámbito de la ciberseguridad se define principalmente como:",
+    "options": [
+      "El uso de fuerza computacional masiva para descifrar contraseñas seguras.",
+      "El análisis del código fuente de aplicaciones para buscar vulnerabilidades lógicas.",
+      "La manipulación psicológica de las personas para que revelen información sensible.",
+      "La instalación de hardware malicioso dentro de la red corporativa interna."
+    ],
+    "correct": 2,
+    "explanation": "La ingeniería social explota la naturaleza humana (confianza, curiosidad, miedo) para engañar a los usuarios y comprometer la seguridad."
+  },
+  {
+    "id": 27,
+    "question": "Recibir un correo electrónico que simula ser de tu banco, solicitando hacer clic en un enlace falso para verificar tu cuenta es un ejemplo de:",
+    "options": [
+      "Shoulder Surfing",
+      "Phishing",
+      "Baiting",
+      "Scareware"
+    ],
+    "correct": 1,
+    "explanation": "El phishing utiliza mensajes fraudulentos diseñados para parecer legítimos, con el fin de robar credenciales de inicio de sesión o datos financieros."
+  },
+  {
+    "id": 28,
+    "question": "Un atacante llama por teléfono a un empleado haciéndose pasar por soporte técnico para obtener su contraseña. Esta técnica se llama:",
+    "options": [
+      "Baiting",
+      "Vishing",
+      "Spamming",
+      "Troyano"
+    ],
+    "correct": 1,
+    "explanation": "El Vishing (Voice Phishing) es una táctica de ingeniería social ejecutada a través de llamadas telefónicas de voz."
+  },
+  {
+    "id": 29,
+    "question": "Un usuario encuentra un USB etiquetado como 'Nóminas 2025' en el estacionamiento y lo conecta a su PC por curiosidad. Este ataque se llama:",
+    "options": [
+      "Scareware",
+      "Pretexting",
+      "Phishing",
+      "Baiting"
+    ],
+    "correct": 3,
+    "explanation": "El Baiting (cebo) utiliza promesas falsas (o curiosidad) usando medios físicos o digitales para engañar a la víctima y comprometer su equipo."
+  },
+  {
+    "id": 30,
+    "question": "¿Qué técnica de ingeniería social se aprovecha del miedo del usuario, mostrándole ventanas falsas de 'Su PC está infectada' para que instale malware?",
+    "options": [
+      "Scareware",
+      "Phishing",
+      "Ataques al Ego",
+      "Ataques de Simpatía"
+    ],
+    "correct": 0,
+    "explanation": "El Scareware asusta o intimida al usuario haciéndole creer que hay un problema grave para que compre o instale un software malicioso de 'solución'."
+  },
+  {
+    "id": 31,
+    "question": "En la gestión de riesgos de seguridad, un riesgo se define formalmente como:",
+    "options": [
+      "El listado de todos los servidores y aplicaciones que componen la infraestructura.",
+      "La posibilidad de que una amenaza explote una vulnerabilidad causando un impacto negativo.",
+      "La implementación de políticas estrictas que impiden que los empleados usen redes sociales.",
+      "El pago realizado a una empresa aseguradora para cubrir incidentes cibernéticos."
+    ],
+    "correct": 1,
+    "explanation": "El riesgo surge cuando existe una intersección entre una amenaza, una vulnerabilidad y un impacto potencial sobre un activo de información."
+  },
+  {
+    "id": 32,
+    "question": "Según la fórmula general, ¿cómo se calcula cuantitativamente el valor de un riesgo informático?",
+    "options": [
+      "Riesgo = Amenaza + Vulnerabilidad",
+      "Riesgo = Probabilidad × Impacto",
+      "Riesgo = Frecuencia ÷ Controles",
+      "Riesgo = Activos × Salvaguardas"
+    ],
+    "correct": 1,
+    "explanation": "El valor del riesgo se determina multiplicando la Probabilidad de ocurrencia del evento por el Impacto que causaría si se materializara."
+  },
+  {
+    "id": 33,
+    "question": "¿Qué término define una debilidad o fallo en un sistema informático que puede ser explotado por un atacante?",
+    "options": [
+      "Riesgo",
+      "Amenaza",
+      "Vulnerabilidad",
+      "Salvaguarda"
+    ],
+    "correct": 2,
+    "explanation": "La vulnerabilidad es la debilidad técnica o procedimental en un activo que permite que una amenaza se materialice."
+  },
+  {
+    "id": 34,
+    "question": "Implementar un firewall de red para reducir la posibilidad de un ciberataque es un ejemplo de:",
+    "options": [
+      "Asunción del riesgo.",
+      "Transferencia del riesgo.",
+      "Eliminación del riesgo.",
+      "Mitigación del riesgo."
+    ],
+    "correct": 3,
+    "explanation": "La mitigación (o tratamiento) de riesgos implica implementar controles y salvaguardas para reducir la probabilidad o el impacto del riesgo."
+  },
+  {
+    "id": 35,
+    "question": "En la matriz de riesgos, ¿qué acción se recomienda tomar frente a un riesgo categorizado como 'Muy Grave' (ej. probabilidad alta e impacto catastrófico)?",
+    "options": [
+      "Aceptar el riesgo y continuar con las operaciones normales sin hacer cambios.",
+      "Requiere la implementación de medidas preventivas y correctivas de forma urgente.",
+      "Ignorar el riesgo hasta que la auditoría anual determine si es necesario actuar.",
+      "Delegar el análisis técnico a un pasante para no distraer al personal clave."
+    ],
+    "correct": 1,
+    "explanation": "Los riesgos muy graves comprometen la continuidad de la empresa y requieren mitigación, transferencia o eliminación inmediata."
+  },
+  {
+    "id": 36,
+    "question": "¿Qué es un Sistema de Gestión de Seguridad de la Información (SGSI) según la norma ISO 27001?",
+    "options": [
+      "Un conjunto de servidores redundantes que respaldan automáticamente todos los archivos.",
+      "Un software antivirus avanzado que bloquea todas las conexiones entrantes sospechosas.",
+      "Un conjunto de políticas y directrices administradas para proteger los activos de información.",
+      "Un manual impreso que se entrega a los empleados nuevos el primer día de trabajo."
+    ],
+    "correct": 2,
+    "explanation": "Un SGSI es un marco sistemático que incluye políticas, procesos e involucra personas y tecnología para gestionar riesgos y proteger información."
+  },
+  {
+    "id": 37,
+    "question": "¿Cuál de las siguientes fases es el primer paso en la estructura de implementación de un SGSI basado en ISO 27001?",
+    "options": [
+      "Auditoría interna y externa.",
+      "Mejora continua y corrección.",
+      "Definición del alcance y contexto de la organización.",
+      "Instalación de sistemas biométricos de acceso físico."
+    ],
+    "correct": 2,
+    "explanation": "Antes de implementar cualquier control, es necesario comprender la organización, las partes interesadas y definir los límites y el alcance del SGSI."
+  },
+  {
+    "id": 38,
+    "question": "A diferencia de un Estándar de seguridad (como ISO 27001), una Directriz (Guideline) se caracteriza por:",
+    "options": [
+      "Ser de cumplimiento obligatorio para evitar el cierre legal de la compañía.",
+      "Ofrecer recomendaciones flexibles o buenas prácticas que no son obligatorias.",
+      "Estar enfocada exclusivamente en la configuración técnica de firewalls.",
+      "Ser redactada por empleados del departamento de ventas de la empresa."
+    ],
+    "correct": 1,
+    "explanation": "Las directrices proveen un marco de trabajo flexible y recomendaciones que ayudan a mejorar procesos, a diferencia de los estándares que son mandatorios."
+  },
+  {
+    "id": 39,
+    "question": "En el contexto de ISO 27001, ¿qué objetivo cumple la fase de 'Evaluación del Desempeño' (Monitoreo y Auditoría)?",
+    "options": [
+      "Comprar licencias de software más modernas para los empleados.",
+      "Verificar que el sistema cumple con los objetivos e identificar no conformidades.",
+      "Desarrollar desde cero el código fuente del sistema de gestión.",
+      "Despedir al personal de seguridad que cometió errores menores en el pasado."
+    ],
+    "correct": 1,
+    "explanation": "El monitoreo y las auditorías internas permiten medir la eficacia del SGSI y asegurar que las políticas están siendo aplicadas correctamente."
+  },
+  {
+    "id": 40,
+    "question": "¿Cuál de las siguientes NO es una amenaza de origen industrial/natural?",
+    "options": [
+      "Fallo del suministro eléctrico prolongado.",
+      "Inundación que destruye el centro de datos principal.",
+      "Ataque de ransomware perpetrado por hackers.",
+      "Incendio provocado por un cortocircuito."
+    ],
+    "correct": 2,
+    "explanation": "El ataque de ransomware es una amenaza deliberada provocada por personas, no una amenaza de origen físico, industrial o natural."
+  },
+  {
+    "id": 41,
+    "question": "¿Qué comando de Linux utilizarías para crear un nuevo directorio llamado 'proyectos_seguros'?",
+    "options": [
+      "mkdir proyectos_seguros",
+      "touch proyectos_seguros",
+      "cd proyectos_seguros",
+      "rmdir proyectos_seguros"
+    ],
+    "correct": 0,
+    "explanation": "El comando 'mkdir' (make directory) se utiliza para crear nuevos directorios en sistemas operativos basados en Unix/Linux."
+  },
+  {
+    "id": 42,
+    "question": "En una consola de Linux, al ejecutar el comando `ls -lA`, el resultado mostrará:",
+    "options": [
+      "Solo los archivos cuyo nombre comience con la letra A mayúscula.",
+      "Un listado detallado de archivos, excluyendo los archivos ocultos.",
+      "Un listado detallado de todos los archivos, incluyendo los ocultos (excepto . y ..).",
+      "El contenido interno de todos los archivos de texto en el directorio actual."
+    ],
+    "correct": 2,
+    "explanation": "'-l' muestra el formato largo detallado y '-A' muestra casi todos (incluye archivos ocultos, pero omite las referencias a directorios . y ..)."
+  },
+  {
+    "id": 43,
+    "question": "Si deseas cambiar los permisos de un archivo 'confidencial.txt' para que SOLO el propietario pueda leer y escribir, ¿qué comando de Linux debes usar?",
+    "options": [
+      "chmod 777 confidencial.txt",
+      "chmod 600 confidencial.txt",
+      "chown confidencial.txt",
+      "chmod 644 confidencial.txt"
+    ],
+    "correct": 1,
+    "explanation": "El número 6 (4 lectura + 2 escritura) se asigna al propietario. Los 0 se asignan al grupo y a otros. Por lo tanto, 'chmod 600' otorga acceso exclusivo."
+  },
+  {
+    "id": 44,
+    "question": "¿Cuál de los siguientes comandos de Linux elimina un archivo llamado 'reporte.doc' preguntando primero al usuario para confirmar la acción?",
+    "options": [
+      "rm -f reporte.doc",
+      "rm -rf reporte.doc",
+      "rm -i reporte.doc",
+      "del reporte.doc"
+    ],
+    "correct": 2,
+    "explanation": "La bandera '-i' (interactive) hace que el comando 'rm' pida confirmación antes de proceder con el borrado del archivo."
+  },
+  {
+    "id": 45,
+    "question": "Para buscar la palabra específica 'contraseña' dentro del archivo de texto 'config.txt', el comando adecuado en Linux es:",
+    "options": [
+      "find 'contraseña' config.txt",
+      "search config.txt 'contraseña'",
+      "grep 'contraseña' config.txt",
+      "cat config.txt | locate 'contraseña'"
+    ],
+    "correct": 2,
+    "explanation": "El comando 'grep' (Global Regular Expression Print) busca patrones de texto en el contenido de uno o más archivos e imprime las líneas coincidentes."
+  },
+  {
+    "id": 46,
+    "question": "¿Qué indica la ruta absoluta '/home/usuario/documentos/' al ejecutar el comando `pwd`?",
+    "options": [
+      "Que estás creando una nueva carpeta llamada documentos.",
+      "Que el directorio de trabajo actual se encuentra en la ubicación mostrada.",
+      "Que la contraseña del usuario ha sido verificada exitosamente.",
+      "Que el archivo seleccionado tiene permisos para ser modificado por todos."
+    ],
+    "correct": 1,
+    "explanation": "El comando 'pwd' (print working directory) imprime la ruta absoluta del directorio actual en el que se encuentra el usuario en la terminal."
+  },
+  {
+    "id": 47,
+    "question": "¿Cuál es la función del comando `tar -xvzf archivo_comprimido.tar.gz` en Linux?",
+    "options": [
+      "Crear un nuevo archivo comprimido en la nube.",
+      "Descomprimir y extraer el contenido del archivo comprimido.",
+      "Listar el contenido del archivo sin realizar la extracción.",
+      "Cifrar el contenido del archivo comprimido utilizando una clave privada."
+    ],
+    "correct": 1,
+    "explanation": "Las opciones de tar: '-x' extrae, '-v' activa el modo detallado, '-z' utiliza gzip y '-f' indica el nombre del archivo a procesar."
+  },
+  {
+    "id": 48,
+    "question": "Si deseas visualizar rápidamente el contenido completo del archivo 'instrucciones.txt' en la consola, ¿qué comando es el más directo?",
+    "options": [
+      "nano instrucciones.txt",
+      "cat instrucciones.txt",
+      "grep instrucciones.txt",
+      "ls instrucciones.txt"
+    ],
+    "correct": 1,
+    "explanation": "El comando 'cat' (concatenate) lee los datos de un archivo y los envía directamente a la salida estándar (la pantalla)."
+  },
+  {
+    "id": 49,
+    "question": "¿Para qué se utilizaría comúnmente el comando `ssh usuario@10.10.10.50` en un entorno de prácticas de seguridad?",
+    "options": [
+      "Para escanear los puertos abiertos de la máquina 10.10.10.50 de forma encubierta.",
+      "Para descargar un archivo malicioso desde el servidor remoto a la red local.",
+      "Para iniciar una sesión de terminal segura y remota en la máquina especificada.",
+      "Para enviar un correo electrónico cifrado al administrador del sistema."
+    ],
+    "correct": 2,
+    "explanation": "SSH (Secure Shell) es un protocolo de red criptográfico para operar servicios de red de forma segura sobre una red no segura."
+  },
+  {
+    "id": 50,
+    "question": "Si un archivo en Linux muestra los permisos `drwxr-xr-x`, ¿qué significa la letra 'd' al inicio de la cadena de permisos?",
+    "options": [
+      "Que el elemento es un Directorio (carpeta).",
+      "Que el elemento tiene permisos de 'delete' (eliminación).",
+      "Que el archivo fue descargado (downloaded) de internet.",
+      "Que se trata de un archivo cifrado digitalmente (digital)."
+    ],
+    "correct": 0,
+    "explanation": "El primer carácter indica el tipo de archivo. 'd' significa directorio, '-' es archivo regular, y 'l' es un enlace simbólico."
+  },
+  {
+    "id": 51,
+    "question": "En el modelo de evaluación de riesgos, ¿qué representa la 'Valoración de Activos'?",
+    "options": [
+      "Determinar el costo que involucraría recuperarse de un evento que dañe o inutilice el activo.",
+      "Pagar el precio de mercado a una aseguradora internacional para cubrir posibles daños.",
+      "Vender los servidores antiguos de la empresa para recuperar inversión económica.",
+      "Clasificar a los empleados en función de su salario y años de antigüedad laboral."
+    ],
+    "correct": 0,
+    "explanation": "La valoración estima cuán valioso es el activo y qué impacto tendría para la organización su pérdida en confidencialidad, integridad o disponibilidad."
+  },
+  {
+    "id": 52,
+    "question": "La técnica de evaluación de riesgos OCTAVE se caracteriza principalmente por:",
+    "options": [
+      "Estar enfocada exclusivamente en organizaciones de naturaleza gubernamental.",
+      "Su enfoque participativo que involucra diferentes niveles para entender los riesgos.",
+      "Centrarse únicamente en el análisis matemático de probabilidades estadísticas.",
+      "Requerir la compra obligatoria de software privativo para su funcionamiento."
+    ],
+    "correct": 1,
+    "explanation": "OCTAVE (Operationally Critical Threat, Asset, and Vulnerability Evaluation) es conocida por ser una metodología dirigida por el personal interno de la propia organización."
+  },
+  {
+    "id": 53,
+    "question": "Una empresa decide trasladar la administración de su centro de datos vulnerable a un proveedor Cloud (AWS/Azure). Este es un ejemplo de tratamiento de riesgo mediante:",
+    "options": [
+      "Asunción del riesgo.",
+      "Mitigación del riesgo.",
+      "Transferencia del riesgo.",
+      "Eliminación del riesgo."
+    ],
+    "correct": 2,
+    "explanation": "La transferencia (o compartir) el riesgo implica trasladar la responsabilidad operativa o financiera de un riesgo a un tercero, como un proveedor o seguro."
+  },
+  {
+    "id": 54,
+    "question": "En un ataque de ingeniería social conocido como 'Baiting' (cebo), ¿qué elemento suele ser el detonante del compromiso de seguridad?",
+    "options": [
+      "Una llamada telefónica agresiva que asusta al recepcionista corporativo.",
+      "La curiosidad de la víctima al encontrar un dispositivo físico (ej. USB) atractivo.",
+      "Un fallo de día cero en el navegador utilizado por el departamento de finanzas.",
+      "La ejecución remota de comandos en un servidor web mal configurado."
+    ],
+    "correct": 1,
+    "explanation": "Baiting atrae a la víctima con falsas promesas o la curiosidad de objetos abandonados intencionalmente, como pendrives infectados."
+  },
+  {
+    "id": 55,
+    "question": "Los ataques de ingeniería social 'al Ego' basan su eficacia en:",
+    "options": [
+      "Asustar a la víctima haciéndole creer que cometió un delito informático penado.",
+      "Provocar compasión pidiendo ayuda en situaciones aparentemente desesperadas.",
+      "Halagar a la víctima o apelar a su deseo de demostrar superioridad o inteligencia.",
+      "Simular un error del sistema que exige la restauración inmediata de contraseñas."
+    ],
+    "correct": 2,
+    "explanation": "Los ataques al ego manipulan a la persona haciéndola sentir importante o inteligente para que, en un momento de orgullo, revele información o dé accesos."
+  },
+  {
+    "id": 56,
+    "question": "El Cibercrimen (como modalidad de ataque) se diferencia de la Ciberguerra principalmente en que:",
+    "options": [
+      "La Ciberguerra solo puede ser realizada por aficionados y el Cibercrimen por expertos.",
+      "El Cibercrimen busca beneficios económicos, mientras la Ciberguerra busca fines políticos.",
+      "El Cibercrimen utiliza métodos analógicos, pero la Ciberguerra utiliza métodos digitales.",
+      "La Ciberguerra siempre involucra la destrucción física inmediata del hardware enemigo."
+    ],
+    "correct": 1,
+    "explanation": "El Cibercrimen está motivado por el lucro (robos, fraudes), mientras que la ciberguerra busca ventajas estratégicas, espionaje o sabotaje entre naciones."
+  },
+  {
+    "id": 57,
+    "question": "¿Qué tipo de 'Hacker' se caracteriza por identificar y reportar vulnerabilidades de un sistema a los propietarios, con autorización previa?",
+    "options": [
+      "Hacker de Sombrero Gris.",
+      "Hacker de Sombrero Blanco.",
+      "Hacker de Sombrero Negro.",
+      "Script Kiddie o Aficionado."
+    ],
+    "correct": 1,
+    "explanation": "Los White Hat Hackers (Sombrero Blanco) actúan de manera ética, usando sus habilidades para mejorar la seguridad corporativa de forma legal y autorizada."
+  },
+  {
+    "id": 58,
+    "question": "¿Cuál de los siguientes es el mejor ejemplo de un 'Procedimiento de Seguridad' formal en una empresa?",
+    "options": [
+      "Un documento genérico que sugiere a los empleados no utilizar contraseñas débiles.",
+      "Una lista de pasos detallados (1, 2, 3) a seguir en caso de sufrir una brecha de datos.",
+      "Una charla motivacional de cinco minutos antes de comenzar el turno laboral matutino.",
+      "El estándar internacional ISO 27001 que la empresa planea comprar el próximo año."
+    ],
+    "correct": 1,
+    "explanation": "Los procedimientos de seguridad (a diferencia de políticas o estándares) son descripciones detalladas de los pasos exactos necesarios para realizar una tarea."
+  },
+  {
+    "id": 59,
+    "question": "En un caso de estudio, si una empresa sufre inundaciones que destruyen sus servidores, evidenciando fallos en su plan de continuidad, se vulneró el principio de:",
+    "options": [
+      "No repudio.",
+      "Confidencialidad.",
+      "Integridad.",
+      "Disponibilidad."
+    ],
+    "correct": 3,
+    "explanation": "La destrucción de los servidores interrumpe los servicios, lo cual viola la disponibilidad de la información para los usuarios que la necesitan."
+  },
+  {
+    "id": 60,
+    "question": "En Linux, ¿qué hace exactamente la bandera `-r` (recursiva) cuando se utiliza junto con el comando de copiado `cp` o borrado `rm`?",
+    "options": [
+      "Invierte el orden alfabético en el que se procesan todos los archivos del directorio.",
+      "Aplica la operación al directorio especificado y a todo el contenido dentro de él.",
+      "Reemplaza silenciosamente los archivos existentes sin solicitar ninguna confirmación.",
+      "Recupera un archivo que había sido eliminado accidentalmente de la papelera."
+    ],
+    "correct": 1,
+    "explanation": "La opción recursiva permite que comandos como 'cp' o 'rm' actúen no solo sobre un directorio, sino sobre todos los subdirectorios y archivos que este contenga."
+  }
+];
 
-        // Estado persistente cargado desde localStorage
+    // Estado persistente cargado desde localStorage
         let currentQuestions = JSON.parse(localStorage.getItem('quiz_current_questions') || '[]');
         let currentIndex = parseInt(localStorage.getItem('quiz_current_index') || '0');
         let score = parseInt(localStorage.getItem('quiz_score') || '0');
